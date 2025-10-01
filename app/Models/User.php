@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,21 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'nik',
+        'no_kk',
+        'nama_kepala_keluarga',
+        'alamat',
+        'desa',
+        'rt',
+        'rw',
+        'kode_pos',
+        'dusun',
+        'nomor_hp',
+        'pekerjaan',
+        'tempat_lahir',
+        'tgl_lahir',
+        'foto_ktp',
+        'foto_kk'
     ];
 
     /**
@@ -45,5 +61,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function PengajuanSurats(): HasMany
+    {
+        return $this->hasMany(PengajuanSurat::class, 'nik', 'nik');
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pengajuan_surats', function (Blueprint $table) {
             $table->id();
             $table->string('nik', 16)->nullable();
-            $table->string('nama', 100);
+            $table->string('name', 100);
             $table->string('email', 100);
             $table->string('alamat', 250);
             $table->foreignId('jenis_surat_id')->constrained('jenis_surats')->onDelete('cascade');

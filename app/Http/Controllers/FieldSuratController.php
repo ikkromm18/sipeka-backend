@@ -27,7 +27,7 @@ class FieldSuratController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFieldSuratRequest $request)
+    public function store()
     {
         //
     }
@@ -51,7 +51,7 @@ class FieldSuratController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFieldSuratRequest $request, FieldSurat $fieldSurat)
+    public function update()
     {
         //
     }
@@ -62,5 +62,18 @@ class FieldSuratController extends Controller
     public function destroy(FieldSurat $fieldSurat)
     {
         //
+    }
+
+    public function getFieldSurat($jenisSuratId)
+    {
+        $fields = FieldSurat::where('jenis_surat_id', $jenisSuratId)->get();
+
+        if ($fields->isEmpty()) {
+            return response()->json([
+                'message' => 'Field Surat tidak ditemukan'
+            ], 404);
+        }
+
+        return response()->json($fields, 200);
     }
 }

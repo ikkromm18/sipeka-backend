@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('rt')->nullable();
             $table->string('rw')->nullable();
             $table->string('kode_pos')->nullable();
+            $table->string('dusun')->nullable();
             $table->string('nomor_hp')->nullable();
             $table->string('pekerjaan')->nullable();
             $table->string('tempat_lahir')->nullable();

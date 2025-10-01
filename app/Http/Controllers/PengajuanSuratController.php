@@ -2,9 +2,93 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PengajuanSurat;
+use App\Models\DataPengajuan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PengajuanSuratController extends Controller
 {
-    //
+
+    public function index(Request $request)
+    {
+        $user = $request->user();
+
+        // Ambil semua pengajuan berdasarkan NIK user
+        $pengajuan = PengajuanSurat::with('jenisSurats')
+            ->where('nik', $user->nik)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json($pengajuan);
+    }
+
+    /**
+     * Detail pengajuan (dengan data field isian).
+     */
+    public function show($id, Request $request)
+    {
+        $user = $request->user();
+
+        $pengajuan = PengajuanSurat::with([
+            'jenisSurat',
+            'dataPengajuans.field'
+        ])
+            ->where('nik', $user->nik) // pastikan hanya milik user
+            ->findOrFail($id);
+
+        return response()->json($pengajuan);
+    }
+
+
+    public function store(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            // Simpan ke tabel pengajuan_surats
+            $pengajuan = PengajuanSurat::create([
+                'nik' => $request->nik,
+                'name' => $request->name,
+                'email' => $request->email,
+                'alamat' => $request->alamat,
+                'jenis_surat_id' => $request->jenis_surat_id,
+                'status' => 'diajukan',
+            ]);
+
+            // Simpan ke tabel data_pengajuans
+            foreach ($request->fields as $field) {
+                DataPengajuan::create([
+                    'pengajuan_id' => $pengajuan->id,
+                    'field_id' => $field['field_id'],
+                    'nilai' => $field['nilai'],
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Pengajuan berhasil diajukan',
+                'pengajuan_id' => $pengajuan->id,
+            ], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function terbaru(Request $request)
+    {
+        $user = $request->user();
+
+        // Ambil semua pengajuan berdasarkan NIK user
+        $pengajuan = PengajuanSurat::with('jenisSurats')
+            ->where('nik', $user->nik)
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
+
+        return response()->json($pengajuan);
+    }
 }

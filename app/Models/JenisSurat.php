@@ -14,4 +14,17 @@ class JenisSurat extends Model
         'nama_jenis',
         'template_surat'
     ];
+
+    public function fieldSurats()
+    {
+
+        return $this->hasMany(FieldSurat::class, 'jenis_surat_id');
+    }
+
+
+    public function PengajuanSurats()
+    {
+
+        return $this->hasMany(PengajuanSurat::class, 'jenis_surat_id');
+    }
 }
