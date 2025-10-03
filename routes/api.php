@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/pengajuan', [PengajuanSuratController::class, 'index']); // list pengajuan user
     Route::get('/pengajuan/{id}', [PengajuanSuratController::class, 'show']); // detail pengajuan
 
-    Route::get('/pengajuan/terbaru', [PengajuanSuratController::class, 'terbaru']);
+    Route::get('/pengajuanterbaru', [PengajuanSuratController::class, 'terbaru']);
 });
 
 Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail']);

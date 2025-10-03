@@ -31,14 +31,16 @@ class PengajuanSuratController extends Controller
         $user = $request->user();
 
         $pengajuan = PengajuanSurat::with([
-            'jenisSurat',
-            'dataPengajuans.field'
+            'JenisSurats',
+            'DataPengajuans.FieldSurats'
         ])
-            ->where('nik', $user->nik) // pastikan hanya milik user
-            ->findOrFail($id);
+            ->where('nik', $user->nik) // hanya milik user
+            ->where('id', $id)         // filter berdasarkan id
+            ->firstOrFail();
 
         return response()->json($pengajuan);
     }
+
 
 
     public function store(Request $request)
