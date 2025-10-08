@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('nama_kepala_keluarga', 16)->nullable();
             $table->string('alamat')->nullable();
             $table->string('desa')->nullable();
+            $table->string('kecamatan')->nullable();
+            $table->string('kabupaten')->nullable();
+            $table->string('provinsi')->nullable();
             $table->string('rt')->nullable();
             $table->string('rw')->nullable();
             $table->string('kode_pos')->nullable();
@@ -31,6 +34,7 @@ return new class extends Migration
             $table->string('nomor_hp')->nullable();
             $table->string('pekerjaan')->nullable();
             $table->string('tempat_lahir')->nullable();
+            $table->string('foto_profil')->nullable();
             $table->date('tgl_lahir')->nullable();
             $table->enum('role', ['User', 'Admin'])->default('User');
             $table->boolean('is_active')->default(false);

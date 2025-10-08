@@ -30,6 +30,9 @@ class User extends Authenticatable
         'desa',
         'rt',
         'rw',
+        'kecamatan',
+        'kabupaten',
+        'provinsi',
         'kode_pos',
         'dusun',
         'nomor_hp',
@@ -37,7 +40,8 @@ class User extends Authenticatable
         'tempat_lahir',
         'tgl_lahir',
         'foto_ktp',
-        'foto_kk'
+        'foto_kk',
+        'is_active'
     ];
 
     /**

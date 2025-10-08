@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FieldSuratController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PengajuanSuratController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/pengajuanterbaru', [PengajuanSuratController::class, 'terbaru']);
 });
+
+Route::get('/pengajuancetak{id}', [PdfController::class, 'cetak']);
 
 Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail']);
 Route::post('reset-password', [AuthController::class, 'reset']);
