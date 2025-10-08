@@ -23,10 +23,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/pengajuan', [PengajuanSuratController::class, 'index'])->name('pengajuan.index');
+    // Route::get('/pengajuan', [PengajuanSuratController::class, 'index'])->name('pengajuan.index');
 
     Route::resource('user', UserController::class);
     Route::put('/diverifikasi/{id}', [UserController::class, 'verifikasi'])->name('user.verifikasi');
+
+
+    Route::resource('pengajuansurat', PengajuanSuratController::class);
 
 
     // Route::resource('jenissurat', JenisSuratController::class);

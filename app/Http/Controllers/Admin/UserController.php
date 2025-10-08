@@ -60,7 +60,7 @@ class UserController extends Controller
         ];
 
 
-        return view('backend.user.index-user', $data);
+        return view('admin.user.index-user', $data);
     }
 
     public function indexAdmin(Request $request)
@@ -83,12 +83,12 @@ class UserController extends Controller
             'users' => $users
         ];
 
-        return view('backend.user.index-admin', $data);
+        return view('admin.user.index-admin', $data);
     }
 
     public function create()
     {
-        return view('backend.user.add-admin');
+        return view('admin.user.add-admin');
     }
 
     public function store(Request $request)
@@ -128,7 +128,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('backend.user.edit-admin', compact('user'));
+        return view('admin.user.edit-user', compact('user'));
     }
 
     public function update(Request $request, $id)
@@ -160,7 +160,7 @@ class UserController extends Controller
     {
 
         $user = User::findOrFail($id);
-        return view('backend.user.edit-password', compact('user'));
+        return view('admin.user.edit-password', compact('user'));
     }
 
     public function updatePassword(Request $request, $id)
