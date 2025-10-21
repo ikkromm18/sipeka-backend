@@ -15,7 +15,7 @@ class PengajuanSuratController extends Controller
         $user = $request->user();
 
         // Ambil semua pengajuan berdasarkan NIK user
-        $pengajuan = PengajuanSurat::with('jenisSurats')
+        $pengajuan = PengajuanSurat::with('JenisSurats')
             ->where('nik', $user->nik)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -47,7 +47,7 @@ class PengajuanSuratController extends Controller
     {
         DB::beginTransaction();
         try {
-            // Simpan ke tabel pengajuan_surats
+            // 🔹 1. Simpan data ke tabel pengajuan_surats
             $pengajuan = PengajuanSurat::create([
                 'nik' => $request->nik,
                 'name' => $request->name,
@@ -57,28 +57,39 @@ class PengajuanSuratController extends Controller
                 'status' => 'diajukan',
             ]);
 
-            // Simpan ke tabel data_pengajuans
-            foreach ($request->fields as $field) {
-                DataPengajuan::create([
-                    'pengajuan_id' => $pengajuan->id,
-                    'field_id' => $field['field_id'],
-                    'nilai' => $field['nilai'],
-                ]);
+            // 🔹 2. Simpan ke tabel data_pengajuans
+            if ($request->has('fields')) {
+                foreach ($request->fields as $fieldId => $nilai) {
+                    // cek file
+                    if ($request->hasFile("fields.$fieldId")) {
+                        $file = $request->file("fields.$fieldId");
+                        $path = $file->store('uploads/pengajuan', 'public');
+                        $nilai = $path;
+                    }
+
+                    DataPengajuan::create([
+                        'pengajuan_id' => $pengajuan->id,
+                        'field_id' => $fieldId,
+                        'nilai' => $nilai,
+                    ]);
+                }
             }
+
 
             DB::commit();
 
             return response()->json([
-                'message' => 'Pengajuan berhasil diajukan',
+                'message' => '✅ Pengajuan berhasil diajukan',
                 'pengajuan_id' => $pengajuan->id,
             ], 201);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+                'message' => '❌ Terjadi kesalahan: ' . $e->getMessage(),
             ], 500);
         }
     }
+
 
     public function terbaru(Request $request)
     {

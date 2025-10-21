@@ -16,7 +16,12 @@ class FieldSurat extends Model
         'jenis_surat_id',
         'nama_field',
         'tipe_field',
-        'is_required'
+        'is_required',
+        'options'
+    ];
+
+    protected $casts = [
+        'options' => 'array',
     ];
 
     public function JenisSurats()

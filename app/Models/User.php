@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(PengajuanSurat::class, 'nik', 'nik');
     }
+
+    public function isAdmin()
+    {
+        return $this->role === 'Admin';
+    }
 }

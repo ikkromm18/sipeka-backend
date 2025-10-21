@@ -26,9 +26,15 @@ class UserController extends Controller
         //     ->paginate(7)
         //     ->withQueryString();
 
-        $users = User::paginate(7);
-
-        // $users = User::where('role', 'User')->paginate(7);
+        $users = User::where('role', 'User')
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                });
+            })
+            ->paginate(7)
+            ->withQueryString();
 
         $data = [
             'users' => $users

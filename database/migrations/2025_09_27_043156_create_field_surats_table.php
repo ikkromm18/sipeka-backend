@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('jenis_surat_id')->constrained('jenis_surats')->onDelete('cascade');
             $table->string('nama_field', 100);
-            $table->enum('tipe_field', ['text', 'number', 'date', 'time', 'boolean', 'email', 'file'])->default('text');
+            $table->enum('tipe_field', ['text', 'number', 'date', 'time', 'boolean', 'email', 'file', 'select'])->default('text');
+            $table->json('options')->nullable();
             $table->boolean('is_required')->default(true);
             $table->timestamps();
         });

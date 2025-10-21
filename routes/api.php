@@ -23,7 +23,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+// Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', fn(Request $request) => $request->user());
     Route::post('/profile/update', [AuthController::class, 'update']);
@@ -32,6 +32,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/pengajuan/{id}', [PengajuanSuratController::class, 'show']); // detail pengajuan
 
     Route::get('/pengajuanterbaru', [PengajuanSuratController::class, 'terbaru']);
+
+    Route::post('/ubahpassword', [AuthController::class, 'ubahPassword']);
 });
 
 Route::get('/pengajuancetak{id}', [PdfController::class, 'cetak']);

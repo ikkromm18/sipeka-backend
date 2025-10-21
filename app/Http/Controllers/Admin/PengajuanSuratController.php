@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DataPengajuan;
 use App\Models\PengajuanSurat;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PengajuanSuratController extends Controller
@@ -13,30 +15,19 @@ class PengajuanSuratController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->input('search');
+        $query = \App\Models\PengajuanSurat::with('JenisSurats');
 
-        // $pengajuansurats = PengajuanSurat::orderBy('updated_at', 'desc')
-        //     ->orderBy('created_at', 'desc')
-        //     ->paginate(6)->withQueryString();
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('nik', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
 
-        // $pengajuansurats = PengajuanSurat::when($search, function ($query, $search) {
-        //     $query->where('nama', 'like', "%{$search}%")
-        //         ->orWhere('jenis_surat', 'like', "%{$search}%");
-        // })
-        //     ->orderBy('updated_at', 'desc')
-        //     ->orderBy('created_at', 'desc')
-        //     ->paginate(6)->withQueryString();
+        $pengajuansurats = $query->paginate(8)->withQueryString();
 
-        $pengajuansurats = PengajuanSurat::paginate(7);
-
-        $data = [
-            'pengajuansurats' => $pengajuansurats,
-
-        ];
-
-        // dd($data);
-
-        return view('admin.pengajuan.index-pengajuan', $data);
+        return view('admin.pengajuan.index-pengajuan', compact('pengajuansurats'));
     }
 
     /**
@@ -58,9 +49,24 @@ class PengajuanSuratController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $pengajuan = PengajuanSurat::with('JenisSurats', 'DataPengajuans.FieldSurats')
+            ->findOrFail($id);
+
+        // $user = User::where('nik', $pengajuan->nik)->first();
+
+        $details = DataPengajuan::where('pengajuan_id', $pengajuan->id)->get();
+        // dd($pengajuan);
+
+        $data = [
+            'pengajuan' => $pengajuan,
+            'detail' => $details
+        ];
+
+        // dd($data);
+
+        return view('admin.pengajuan.show-pengajuan', $data);
     }
 
     /**
@@ -85,5 +91,23 @@ class PengajuanSuratController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function updateStatus($id, $status)
+    {
+        $pengajuan = PengajuanSurat::findOrFail($id);
+        $pengajuan->status = $status;
+        $pengajuan->save();
+
+        return redirect()->back()->with('success', "Status pengajuan berhasil diubah menjadi {$status}.");
+    }
+
+    public function cetak($id)
+    {
+        $pengajuan = PengajuanSurat::with('JenisSurats', 'DataPengajuans.FieldSurats')->findOrFail($id);
+
+        dd($pengajuan);
+        // return PDF view atau halaman cetak
+        return view('admin.pengajuan.cetak', compact('pengajuan'));
     }
 }

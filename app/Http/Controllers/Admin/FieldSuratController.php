@@ -3,63 +3,92 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\FieldSurat;
+use App\Models\JenisSurat;
 use Illuminate\Http\Request;
 
 class FieldSuratController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->input('search');
+
+        $fieldSurats = \App\Models\FieldSurat::with('JenisSurats')
+            ->when($search, function ($query, $search) {
+                $query->where('nama_field', 'like', "%{$search}%")
+                    ->orWhereHas('JenisSurats', function ($q) use ($search) {
+                        $q->where('nama_jenis', 'like', "%{$search}%");
+                    });
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(8)
+            ->appends(['search' => $search]); // supaya query tetap saat ganti halaman
+
+        return view('admin.fieldsurat.index-fieldsurat', compact('fieldSurats', 'search'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        //
+        $jenisSurats = JenisSurat::all();
+        return view('admin.fieldsurat.create-fieldsurat', compact('jenisSurats'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'jenis_surat_id' => 'required|exists:jenis_surats,id',
+            'nama_field' => 'required|string|max:100',
+            'tipe_field' => 'required|in:text,number,date,time,boolean,email,file,select',
+            'options' => 'nullable|string',
+            'is_required' => 'nullable|boolean',
+        ]);
+
+        FieldSurat::create([
+            'jenis_surat_id' => $request->jenis_surat_id,
+            'nama_field' => $request->nama_field,
+            'tipe_field' => $request->tipe_field,
+            'options' => $request->tipe_field === 'select'
+                ? json_decode($request->options, true)
+                : null,
+            'is_required' => $request->boolean('is_required'),
+        ]);
+
+        return redirect()->route('fieldsurat.index')->with('success', 'Field Surat berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(FieldSurat $fieldsurat)
     {
-        //
+        $jenisSurats = JenisSurat::all();
+        return view('admin.fieldsurat.edit-fieldsurat', compact('fieldsurat', 'jenisSurats'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, FieldSurat $fieldsurat)
     {
-        //
+        $request->validate([
+            'jenis_surat_id' => 'required|exists:jenis_surats,id',
+            'nama_field' => 'required|string|max:100',
+            'tipe_field' => 'required|in:text,number,date,time,boolean,email,file,select',
+            'options' => 'nullable|string',
+            'is_required' => 'nullable|boolean',
+        ]);
+
+        $fieldsurat->update([
+            'jenis_surat_id' => $request->jenis_surat_id,
+            'nama_field' => $request->nama_field,
+            'tipe_field' => $request->tipe_field,
+            'options' => $request->tipe_field === 'select'
+                ? json_decode($request->options, true)
+                : null,
+            'is_required' => $request->boolean('is_required'),
+        ]);
+
+        return redirect()->route('fieldsurat.index')->with('success', 'Field Surat berhasil diperbarui.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(FieldSurat $fieldsurat)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $fieldsurat->delete();
+        return redirect()->route('fieldsurat.index')->with('success', 'Field Surat berhasil dihapus.');
     }
 }

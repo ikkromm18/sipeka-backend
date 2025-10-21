@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
@@ -217,5 +218,34 @@ class AuthController extends Controller
             'message' => 'Profil berhasil diperbarui ✅',
             'user'    => $user
         ]);
+    }
+
+    public function ubahPassword(Request $request)
+    {
+        // validasi
+        $request->validate([
+            'password' => 'required',
+            'new_password' => 'required|min:6|confirmed', // otomatis cek new_password_confirmation
+        ]);
+
+        $user = Auth::user();
+
+
+        // Cek apakah password lama cocok
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Password lama tidak sesuai.'
+            ], 400);
+        }
+
+        // Update password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password berhasil diubah.'
+        ], 200);
     }
 }

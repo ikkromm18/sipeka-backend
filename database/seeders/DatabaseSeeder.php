@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,11 +19,23 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => bcrypt('555555'),
         ]);
 
+        DB::table('users')->insert([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password'), // Pastikan menggunakan hash
+            'role' => 'Admin',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        //Panggil Seeder
         $this->call([
             JenisSuratSeeder::class,
-            FieldSuratSeeder::class
+            FieldSuratSeeder::class,
+            PengajuanSuratSeeder::class
         ]);
     }
 }

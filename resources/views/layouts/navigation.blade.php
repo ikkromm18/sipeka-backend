@@ -18,6 +18,19 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('jenissurat.index')" :active="request()->routeIs('jenissurat.index')">
+                        {{ __('Jenis Surat') }}
+                    </x-nav-link>
+                </div>
+
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('fieldsurat.index')" :active="request()->routeIs('fieldsurat.index')">
+                        {{ __('Field Surat') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                         {{ __('Kelola User') }}
                     </x-nav-link>
@@ -26,6 +39,12 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('pengajuansurat.index')" :active="request()->routeIs('pengajuansurat.index')">
                         {{ __('Pengajuan Surat') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('laporanpengajuan.index')" :active="request()->routeIs('laporanpengajuan.index')">
+                        {{ __('Laporan') }}
                     </x-nav-link>
                 </div>
             </div>

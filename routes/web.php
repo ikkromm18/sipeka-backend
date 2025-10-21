@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FieldSuratController;
 use App\Http\Controllers\Admin\JenisSuratController;
+use App\Http\Controllers\Admin\LaporanPengajuanController;
 use App\Http\Controllers\Admin\PengajuanSuratController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
@@ -16,7 +17,7 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('role:Admin')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -31,10 +32,19 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('pengajuansurat', PengajuanSuratController::class);
 
+    Route::put('/pengajuansurat/{id}/status/{status}', [PengajuanSuratController::class, 'updateStatus'])
+        ->name('pengajuansurat.updateStatus');
 
-    // Route::resource('jenissurat', JenisSuratController::class);
+    Route::get('/pengajuansurat/{id}/cetak', [PengajuanSuratController::class, 'cetak'])
+        ->name('pengajuansurat.cetak');
 
-    // Route::resource('fieldsurat', FieldSuratController::class);
+
+    Route::resource('jenissurat', JenisSuratController::class);
+
+    Route::resource('fieldsurat', FieldSuratController::class);
+
+    Route::get('/laporan-pengajuan', [LaporanPengajuanController::class, 'index'])->name('laporanpengajuan.index');
+    Route::get('/laporan-pengajuan/cetak', [LaporanPengajuanController::class, 'cetak'])->name('laporanpengajuan.cetak');
 });
 
 require __DIR__ . '/auth.php';

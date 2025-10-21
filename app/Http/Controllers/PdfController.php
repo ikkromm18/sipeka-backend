@@ -55,15 +55,22 @@ class PdfController extends Controller
             $templateProcessor->setValue('rw', $pengajuan->user->rw);
             $templateProcessor->setValue('desa', $pengajuan->user->desa);
             $templateProcessor->setValue('dusun', $pengajuan->user->dusun);
+            $templateProcessor->setValue('kecamatan', $pengajuan->user->kecamatan);
+            $templateProcessor->setValue('kabupaten', $pengajuan->user->kabupaten);
+            $templateProcessor->setValue('provinsi', $pengajuan->user->provinsi);
             $templateProcessor->setValue('kode_pos', $pengajuan->user->kode_pos);
             $templateProcessor->setValue('no_hp', $pengajuan->user->nomor_hp);
+            $templateProcessor->setValue('tempat_lahir', $pengajuan->user->tempat_lahir);
+            $templateProcessor->setValue('tgl_lahir', $pengajuan->user->tgl_lahir);
+            $templateProcessor->setValue('pekerjaan', $pengajuan->user->pekerjaan);
         }
 
         // 4️⃣ Isi data dari pengajuan
         foreach ($pengajuan->DataPengajuans as $dp) {
             $fieldName = strtolower(str_replace(' ', '_', $dp->FieldSurats->nama_field));
-            $templateProcessor->setValue($fieldName, $dp->nilai);
+            $templateProcessor->setValue($fieldName, $dp->nilai ?? '-');
         }
+
 
         // 5️⃣ Simpan hasil ke file Word baru di public path
         $fileName = 'surat_pengajuan_' . $pengajuan->id . '.docx';

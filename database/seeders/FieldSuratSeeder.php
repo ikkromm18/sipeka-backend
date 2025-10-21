@@ -13,15 +13,65 @@ class FieldSuratSeeder extends Seeder
      */
     public function run(): void
     {
+
+        DB::table('field_surats')->insert([
+            [
+                'jenis_surat_id' => 1,
+                'nama_field' => 'Alasan Pindah',
+                'tipe_field' => 'select',
+                'options' => json_encode(['Pendidikan', 'Pekerjaan', 'Keamanan', 'Kesehatan', 'Perumahan', 'Keluarga', 'Lainnya']),
+            ],
+            [
+                'jenis_surat_id' => 1,
+                'nama_field' => 'Jenis Kepindahan',
+                'tipe_field' => 'select',
+                'options' => json_encode(['Kepala Keluarga', 'KK dan Seluruh Anggota Keluarga', 'KK dan Sebagian Anggota Keluarga', 'Anggota Keluarga']),
+            ],
+            [
+                'jenis_surat_id' => 1,
+                'nama_field' => 'Status Kk Bagi Yang Tidak Pindah',
+                'tipe_field' => 'select',
+                'options' => json_encode(['Numpang KK', 'Membuat KK Baru', 'Nomor KK Tetap']),
+            ],
+            [
+                'jenis_surat_id' => 1,
+                'nama_field' => 'Status Kk Bagi Yang Pindah',
+                'tipe_field' => 'select',
+                'options' => json_encode(['Numpang KK', 'Membuat KK Baru']),
+            ],
+            // 
+
+            [
+                'jenis_surat_id' => 2,
+                'nama_field' => 'Alasan Pindah',
+                'tipe_field' => 'select',
+                'options' => json_encode(['Pendidikan', 'Pekerjaan', 'Keamanan', 'Kesehatan', 'Perumahan', 'Keluarga', 'Lainnya']),
+            ],
+            [
+                'jenis_surat_id' => 2,
+                'nama_field' => 'Jenis Kepindahan',
+                'tipe_field' => 'select',
+                'options' => json_encode(['Kepala Keluarga', 'KK dan Seluruh Anggota Keluarga', 'KK dan Sebagian Anggota Keluarga', 'Anggota Keluarga']),
+            ],
+            [
+                'jenis_surat_id' => 2,
+                'nama_field' => 'Status Kk Bagi Yang Tidak Pindah',
+                'tipe_field' => 'select',
+                'options' => json_encode(['Numpang KK', 'Membuat KK Baru', 'Nomor KK Tetap']),
+            ],
+            [
+                'jenis_surat_id' => 2,
+                'nama_field' => 'Status Kk Bagi Yang Pindah',
+                'tipe_field' => 'select',
+                'options' => json_encode(['Numpang KK', 'Membuat KK Baru']),
+            ],
+        ]);
+
+
         $data = [
             // 1
             [
                 'jenis_surat_id' => 1,
-                'nama_field' => 'Alasan Pindah',
-                'tipe_field' => 'text',
-            ],
-            [
-                'jenis_surat_id' => 1,
                 'nama_field' => 'Alamat Tujuan',
                 'tipe_field' => 'text',
             ],
@@ -65,37 +115,28 @@ class FieldSuratSeeder extends Seeder
                 'nama_field' => 'Kode Pos Tujuan',
                 'tipe_field' => 'text',
             ],
-            [
-                'jenis_surat_id' => 1,
-                'nama_field' => 'No Hp Tujuan',
-                'tipe_field' => 'text',
-            ],
-            [
-                'jenis_surat_id' => 1,
-                'nama_field' => 'Jenis Kepindahan',
-                'tipe_field' => 'text',
-            ],
-            [
-                'jenis_surat_id' => 1,
-                'nama_field' => 'Status Kk Bagi Yang Tidak Pindah',
-                'tipe_field' => 'text',
-            ],
-            [
-                'jenis_surat_id' => 1,
-                'nama_field' => 'Status Kk Bagi Yang Pindah',
-                'tipe_field' => 'text',
-            ],
+
             [
                 'jenis_surat_id' => 1,
                 'nama_field' => 'Keluarga Yang Pindah',
                 'tipe_field' => 'text',
+            ],
+            [
+                'jenis_surat_id' => 1,
+                'nama_field' => 'Surat Pengantar Pindah Dari Kelurahan',
+                'tipe_field' => 'file',
+            ],
+            [
+                'jenis_surat_id' => 1,
+                'nama_field' => 'Buku Nikah',
+                'tipe_field' => 'file',
             ],
             // 2
-            [
-                'jenis_surat_id' => 2,
-                'nama_field' => 'Alasan Pindah',
-                'tipe_field' => 'text',
-            ],
+            // [
+            //     'jenis_surat_id' => 2,
+            //     'nama_field' => 'Alasan Pindah',
+            //     'tipe_field' => 'text',
+            // ],
             [
                 'jenis_surat_id' => 2,
                 'nama_field' => 'Alamat Tujuan',
@@ -143,33 +184,28 @@ class FieldSuratSeeder extends Seeder
             ],
             [
                 'jenis_surat_id' => 2,
-                'nama_field' => 'No Hp Tujuan',
-                'tipe_field' => 'text',
-            ],
-            [
-                'jenis_surat_id' => 2,
-                'nama_field' => 'Jenis Kepindahan',
-                'tipe_field' => 'text',
-            ],
-            [
-                'jenis_surat_id' => 2,
-                'nama_field' => 'Status Kk Bagi Yang Tidak Pindah',
-                'tipe_field' => 'text',
-            ],
-            [
-                'jenis_surat_id' => 2,
-                'nama_field' => 'Status Kk Bagi Yang Pindah',
-                'tipe_field' => 'text',
-            ],
-            [
-                'jenis_surat_id' => 2,
                 'nama_field' => 'Keluarga Yang Pindah',
                 'tipe_field' => 'text',
+            ],
+            [
+                'jenis_surat_id' => 2,
+                'nama_field' => 'Surat Pengantar Pindah Dari Kelurahan',
+                'tipe_field' => 'file',
+            ],
+            [
+                'jenis_surat_id' => 2,
+                'nama_field' => 'Buku Nikah',
+                'tipe_field' => 'file',
             ],
             // 3
             [
                 'jenis_surat_id' => 3,
-                'nama_field' => 'Nomor Surat Desa',
+                'nama_field' => 'Surat Pengantar dari Kelurahan',
+                'tipe_field' => 'file',
+            ],
+            [
+                'jenis_surat_id' => 3,
+                'nama_field' => 'Nomor Surat Kelurahan',
                 'tipe_field' => 'text',
             ],
             [
@@ -238,6 +274,11 @@ class FieldSuratSeeder extends Seeder
                 'tipe_field' => 'text',
             ],
             // 4
+            [
+                'jenis_surat_id' => 4,
+                'nama_field' => 'Surat Pengantar dari Kelurahan',
+                'tipe_field' => 'file',
+            ],
             [
                 'jenis_surat_id' => 4,
                 'nama_field' => 'Hari Hajatan',
