@@ -59,7 +59,9 @@
                                     <td class="px-4 py-3">{{ $index + 1 }}</td>
                                     <td class="px-4 py-3">{{ $pengajuan->user->name ?? '-' }}</td>
                                     <td class="px-4 py-3">{{ $pengajuan->JenisSurats->nama_jenis ?? '-' }}</td>
-                                    <td class="px-4 py-3">{{ $pengajuan->created_at->format('d/m/Y') }}</td>
+                                    {{-- <td class="px-4 py-3">{{ $pengajuan->created_at->format('d/m/Y') ?? '-' }}</td> --}}
+                                    <td class="px-4 py-3">{{ $pengajuan->created_at }}</td>
+
                                     <td class="px-4 py-3">
                                         <span
                                             class="px-2 py-1 text-xs font-medium rounded-md

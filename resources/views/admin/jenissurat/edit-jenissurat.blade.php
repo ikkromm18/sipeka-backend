@@ -22,6 +22,13 @@
                     </div>
 
                     <div class="mb-4">
+                        <x-input-label for="kode_jenis" value="Nama Jenis Surat" />
+                        <x-text-input id="kode_jenis" name="kode_jenis" type="text" class="block w-full mt-1"
+                            value="{{ old('kode_jenis', $jenissurat->kode_jenis) }}" required />
+                        <x-input-error :messages="$errors->get('kode_jenis')" class="mt-2" />
+                    </div>
+
+                    <div class="mb-4">
                         <x-input-label for="template_surat" value="Template Surat (Opsional)" />
                         @if ($jenissurat->template_surat)
                             <p class="mb-2 text-sm text-gray-600">

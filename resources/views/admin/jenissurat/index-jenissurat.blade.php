@@ -34,6 +34,7 @@
                         <thead class="text-xs text-gray-800 uppercase bg-gray-50">
                             <tr>
                                 <th class="px-4 py-3">No</th>
+                                <th class="px-4 py-3">Kode Jenis</th>
                                 <th class="px-4 py-3">Nama Jenis</th>
                                 <th class="px-4 py-3">Template</th>
                                 <th class="px-4 py-3 text-center">Aksi</th>
@@ -43,6 +44,7 @@
                             @forelse ($jenisSurats as $index => $jenis)
                                 <tr class="border-t hover:bg-gray-50">
                                     <td class="px-4 py-3">{{ $jenisSurats->firstItem() + $index }}</td>
+                                    <td class="px-4 py-3 font-medium">{{ $jenis->kode_jenis }}</td>
                                     <td class="px-4 py-3 font-medium">{{ $jenis->nama_jenis }}</td>
                                     <td class="px-4 py-3">
                                         @if ($jenis->template_surat)

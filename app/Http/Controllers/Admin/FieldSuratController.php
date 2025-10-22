@@ -22,7 +22,7 @@ class FieldSuratController extends Controller
             })
             ->orderBy('id', 'desc')
             ->paginate(8)
-            ->appends(['search' => $search]); // supaya query tetap saat ganti halaman
+            ->appends(['search' => $search]);
 
         return view('admin.fieldsurat.index-fieldsurat', compact('fieldSurats', 'search'));
     }
@@ -49,13 +49,14 @@ class FieldSuratController extends Controller
             'nama_field' => $request->nama_field,
             'tipe_field' => $request->tipe_field,
             'options' => $request->tipe_field === 'select'
-                ? json_decode($request->options, true)
+                ? json_encode(array_map('trim', explode(',', $request->options)))
                 : null,
             'is_required' => $request->boolean('is_required'),
         ]);
 
         return redirect()->route('fieldsurat.index')->with('success', 'Field Surat berhasil ditambahkan.');
     }
+
 
     public function edit(FieldSurat $fieldsurat)
     {
@@ -72,19 +73,32 @@ class FieldSuratController extends Controller
             'options' => 'nullable|string',
             'is_required' => 'nullable|boolean',
         ]);
+        if ($request->tipe_field === 'select') {
+            $optionsArray = array_map('trim', explode(',', $request->options));
+            $optionsJson = json_encode($optionsArray);
+
+            dd([
+                'raw_input' => $request->options,
+                'array' => $optionsArray,
+                'json' => $optionsJson,
+            ]);
+        }
+
+
 
         $fieldsurat->update([
             'jenis_surat_id' => $request->jenis_surat_id,
             'nama_field' => $request->nama_field,
             'tipe_field' => $request->tipe_field,
             'options' => $request->tipe_field === 'select'
-                ? json_decode($request->options, true)
+                ? json_encode(array_map('trim', explode(',', $request->options)))
                 : null,
             'is_required' => $request->boolean('is_required'),
         ]);
 
         return redirect()->route('fieldsurat.index')->with('success', 'Field Surat berhasil diperbarui.');
     }
+
 
     public function destroy(FieldSurat $fieldsurat)
     {

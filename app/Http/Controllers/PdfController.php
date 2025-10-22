@@ -34,6 +34,24 @@ class PdfController extends Controller
         $templateProcessor->setValue('email', $pengajuan->email);
         $templateProcessor->setValue('status', $pengajuan->status);
 
+        $bulanRomawi = [
+            1 => 'I',
+            2 => 'II',
+            3 => 'III',
+            4 => 'IV',
+            5 => 'V',
+            6 => 'VI',
+            7 => 'VII',
+            8 => 'VIII',
+            9 => 'IX',
+            10 => 'X',
+            11 => 'XI',
+            12 => 'XII',
+        ];
+
+        $bulan = $bulanRomawi[(int) date('n')];
+        $tahun = date('Y');
+
         // tetap
         $templateProcessor->setValue('kode_provinsi', '33');
         $templateProcessor->setValue('nama_provinsi', 'JAWA TENGAH');
@@ -43,6 +61,10 @@ class PdfController extends Controller
         $templateProcessor->setValue('nama_kecamatan', 'PETARUKAN');
         $templateProcessor->setValue('desa', $pengajuan->user->desa);
         $templateProcessor->setValue('dusun', $pengajuan->user->dusun);
+        $templateProcessor->setValue('id_pengajuan', $pengajuan->id);
+        $templateProcessor->setValue('kode_jenis', $pengajuan->JenisSurats->kode_jenis);
+        $templateProcessor->setValue('bulan', $bulan);
+        $templateProcessor->setValue('tahun', $tahun);
 
 
 

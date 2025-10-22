@@ -30,10 +30,11 @@ class JenisSuratController extends Controller
     {
         $request->validate([
             'nama_jenis' => 'required|string|max:100',
+            'kode_jenis' => 'required|integer|max:100',
             'template_surat' => 'nullable|file|mimes:doc,docx,pdf',
         ]);
 
-        $data = $request->only('nama_jenis');
+        $data = $request->only(['nama_jenis', 'kode_jenis']);
 
         if ($request->hasFile('template_surat')) {
             $data['template_surat'] = $request->file('template_surat')->store('templates', 'public');
@@ -56,7 +57,7 @@ class JenisSuratController extends Controller
             'template_surat' => 'nullable|file|mimes:doc,docx,pdf',
         ]);
 
-        $data = $request->only('nama_jenis');
+        $data = $request->only(['nama_jenis', 'kode_jenis']);
 
         if ($request->hasFile('template_surat')) {
             $data['template_surat'] = $request->file('template_surat')->store('templates', 'public');

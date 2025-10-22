@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('jenis_surats', function (Blueprint $table) {
             $table->id();
             $table->string('nama_jenis', 100);
+            $table->integer('kode_jenis');
             $table->string('template_surat')->nullable();
             $table->timestamps();
         });
