@@ -158,7 +158,7 @@
 
                         {{-- Jika status sedang diproses --}}
                         @if ($pengajuan->status === 'diproses')
-                            <a href="{{ route('pengajuansurat.cetak', $pengajuan->id) }}" target="_blank"
+                            <a href="{{ route('pengajuansurat.cetakadmin', $pengajuan->id) }}"
                                 class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded hover:bg-indigo-700">
                                 🖨 Cetak
                             </a>

@@ -20,7 +20,7 @@ class AuthController extends Controller
             'name'                  => 'required|string|max:255',
             'email'                 => 'required|email|unique:users',
             'password'              => 'required|confirmed|min:6',
-            'nik'                   => 'nullable|string|max:16',
+            'nik'                   => 'nullable|string|max:16|unique:users',
             'no_kk'                 => 'nullable|string|max:16',
             'nama_kepala_keluarga'  => 'nullable|string|max:255',
             'alamat'                => 'nullable|string|max:255',
@@ -133,6 +133,7 @@ class AuthController extends Controller
 
         return response()->json(['message' => __($status)], 422);
     }
+
 
     public function reset(Request $request)
     {

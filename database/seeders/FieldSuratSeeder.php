@@ -65,6 +65,47 @@ class FieldSuratSeeder extends Seeder
                 'tipe_field' => 'select',
                 'options' => json_encode(['Numpang KK', 'Membuat KK Baru']),
             ],
+            [
+                'jenis_surat_id' => 3,
+                'nama_field' => 'Status Anda',
+                'tipe_field' => 'select',
+                'options' => json_encode([
+                    'Jejaka / Belum Kawin',
+                    'Perawan / Belum Kawin',
+                    'Duda (Cerai Hidup)',
+                    'Janda (Cerai Hidup)',
+                    'Duda (Cerai Mati)',
+                    'Janda (Cerai Mati)',
+                ]),
+            ],
+            [
+                'jenis_surat_id' => 3,
+                'nama_field' => 'Status Pasangan',
+                'tipe_field' => 'select',
+                'options' => json_encode([
+                    'Jejaka / Belum Kawin',
+                    'Perawan / Belum Kawin',
+                    'Duda (Cerai Hidup)',
+                    'Janda (Cerai Hidup)',
+                    'Duda (Cerai Mati)',
+                    'Janda (Cerai Mati)',
+                ]),
+            ],
+
+            [
+                'jenis_surat_id' => 4,
+                'nama_field' => 'Hari Hajatan',
+                'tipe_field' => 'select',
+                'options' => json_encode([
+                    'Senin',
+                    'Selasa',
+                    'Rabu',
+                    'Kamis',
+                    'Jumat',
+                    'Sabtu',
+                    'Ahad',
+                ]),
+            ],
         ]);
 
 
@@ -211,18 +252,23 @@ class FieldSuratSeeder extends Seeder
             [
                 'jenis_surat_id' => 3,
                 'nama_field' => 'Tanggal Surat',
-                'tipe_field' => 'text',
+                'tipe_field' => 'date',
+            ],
+            [
+                'jenis_surat_id' => 3,
+                'nama_field' => 'Tanggal Pernikahan',
+                'tipe_field' => 'date',
             ],
             [
                 'jenis_surat_id' => 3,
                 'nama_field' => 'Agama',
                 'tipe_field' => 'text',
             ],
-            [
-                'jenis_surat_id' => 3,
-                'nama_field' => 'Status',
-                'tipe_field' => 'text',
-            ],
+            // [
+            //     'jenis_surat_id' => 3,
+            //     'nama_field' => 'Status',
+            //     'tipe_field' => 'text',
+            // ],
             [
                 'jenis_surat_id' => 3,
                 'nama_field' => 'Nama Pasangan',
@@ -248,11 +294,11 @@ class FieldSuratSeeder extends Seeder
                 'nama_field' => 'Pekerjaan Pasangan',
                 'tipe_field' => 'text',
             ],
-            [
-                'jenis_surat_id' => 3,
-                'nama_field' => 'Status Pasangan',
-                'tipe_field' => 'text',
-            ],
+            // [
+            //     'jenis_surat_id' => 3,
+            //     'nama_field' => 'Status Pasangan',
+            //     'tipe_field' => 'text',
+            // ],
             [
                 'jenis_surat_id' => 3,
                 'nama_field' => 'Alamat Pasangan',
@@ -279,15 +325,15 @@ class FieldSuratSeeder extends Seeder
                 'nama_field' => 'Surat Pengantar dari Kelurahan',
                 'tipe_field' => 'file',
             ],
-            [
-                'jenis_surat_id' => 4,
-                'nama_field' => 'Hari Hajatan',
-                'tipe_field' => 'text',
-            ],
+            // [
+            //     'jenis_surat_id' => 4,
+            //     'nama_field' => 'Hari Hajatan',
+            //     'tipe_field' => 'text',
+            // ],
             [
                 'jenis_surat_id' => 4,
                 'nama_field' => 'Tanggal Hajatan',
-                'tipe_field' => 'text',
+                'tipe_field' => 'date',
             ],
             [
                 'jenis_surat_id' => 4,

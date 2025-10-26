@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PengajuanSurat;
+use App\Models\Utility;
 use PhpOffice\PhpWord\TemplateProcessor;
 use PhpOffice\PhpWord\IOFactory;
 use Dompdf\Dompdf;
@@ -18,6 +19,8 @@ class PdfController extends Controller
             'JenisSurats',
             'DataPengajuans.FieldSurats'
         ])->findOrFail($id);
+
+        $utility = Utility::first();
 
         // 1️⃣ Tentukan path template Word
         $templatePath = public_path('storage/' . $pengajuan->JenisSurats->template_surat);
@@ -65,6 +68,8 @@ class PdfController extends Controller
         $templateProcessor->setValue('kode_jenis', $pengajuan->JenisSurats->kode_jenis);
         $templateProcessor->setValue('bulan', $bulan);
         $templateProcessor->setValue('tahun', $tahun);
+        $templateProcessor->setValue('nama_camat', $utility->nama_camat ?? '-');
+        $templateProcessor->setValue('nip_camat', $utility->nip_camat ?? '-');
 
 
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FieldSuratController;
+use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PengajuanSuratController;
 use Illuminate\Http\Request;
@@ -43,5 +44,8 @@ Route::post('reset-password', [AuthController::class, 'reset']);
 
 
 Route::get('/getFieldSurat/{id}', [FieldSuratController::class, 'getFieldSurat']);
+
+Route::get('/getNomorAdmin', [GlobalController::class, 'index']);
+
 
 Route::post('/pengajuan', [PengajuanSuratController::class, 'store']);

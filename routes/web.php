@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\LaporanPengajuanController;
 use App\Http\Controllers\Admin\PengajuanSuratController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\UtilityController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,11 +36,13 @@ Route::middleware('role:Admin')->group(function () {
     Route::put('/pengajuansurat/{id}/status/{status}', [PengajuanSuratController::class, 'updateStatus'])
         ->name('pengajuansurat.updateStatus');
 
-    Route::get('/pengajuansurat/{id}/cetak', [PengajuanSuratController::class, 'cetak'])
-        ->name('pengajuansurat.cetak');
+    Route::get('/pengajuansurat/{id}/cetak', [PengajuanSuratController::class, 'cetakAdmin'])
+        ->name('pengajuansurat.cetakadmin');
 
 
     Route::resource('jenissurat', JenisSuratController::class);
+
+    Route::resource('settings', UtilityController::class);
 
     Route::resource('fieldsurat', FieldSuratController::class);
 
