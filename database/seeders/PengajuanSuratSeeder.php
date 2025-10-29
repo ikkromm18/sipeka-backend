@@ -16,9 +16,9 @@ class PengajuanSuratSeeder extends Seeder
         // Buat Data 
         $data = [
             [
-                'name' => 'Muhammad Ikrom',
-                'email' => 'muhammadikkrom749@gmail.com',
-                'alamat' => 'pemalanag',
+                'name' => 'Wiji',
+                'email' => 'wiji749@gmail.com',
+                'alamat' => 'pemalang',
                 'jenis_surat_id' => 1
             ]
         ];

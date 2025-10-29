@@ -173,6 +173,14 @@
                                 </button>
                             </form>
                         @endif
+
+                        {{-- Jika status sedang diproses --}}
+                        @if ($pengajuan->status === 'selesai')
+                            <a href="{{ route('pengajuansurat.cetakadmin', $pengajuan->id) }}"
+                                class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded hover:bg-indigo-700">
+                                🖨 Cetak Lagi
+                            </a>
+                        @endif
                     </div>
 
                 </div>

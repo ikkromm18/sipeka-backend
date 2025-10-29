@@ -78,14 +78,30 @@
 
                         </button>
                     </div>
+                    {{-- <div
+                        class="relative inline-flex items-center ml-2 text-sm font-medium text-center text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <a href="">
+                            <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M17.133 12.632v-1.8a5.406 5.406 0 0 0-4.154-5.262.955.955 0 0 0 .021-.106V3.1a1 1 0 0 0-2 0v2.364a.955.955 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C6.867 15.018 5 15.614 5 16.807 5 17.4 5 18 5.538 18h12.924C19 18 19 17.4 19 16.807c0-1.193-1.867-1.789-1.867-4.175ZM8.823 19a3.453 3.453 0 0 0 6.354 0H8.823Z" />
+                            </svg>
+
+                            <div
+                                class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">
+                                20</div>
+                        </a>
+                    </div> --}}
+
                     <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600"
                         id="dropdown-user">
-                        {{-- <div class="px-4 py-3" role="none">
+                        <div class="px-4 py-3" role="none">
                             <p class="text-sm text-gray-900 dark:text-white" role="none">
                                 {{ Auth::user()->name }}
                             </p>
-                     
-                        </div> --}}
+
+                        </div>
                         <ul class="py-1" role="none">
                             <li>
                                 <a href="{{ route('profile.edit') }}"
@@ -125,7 +141,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    {{-- <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
+    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
@@ -156,5 +172,5 @@
                 </form>
             </div>
         </div>
-    </div> --}}
+    </div>
 </nav>

@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             JenisSuratSeeder::class,
             FieldSuratSeeder::class,
-            PengajuanSuratSeeder::class,
+            // PengajuanSuratSeeder::class,
             SettingsSeeder::class
         ]);
     }

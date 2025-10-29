@@ -6,7 +6,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\DataPengajuan;
 use App\Models\PengajuanSurat;
+use App\Models\User;
 use App\Models\Utility;
+use App\Notifications\UpdateStatusPengajuanNotification;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -100,8 +102,15 @@ class PengajuanSuratController extends Controller
     public function updateStatus($id, $status)
     {
         $pengajuan = PengajuanSurat::findOrFail($id);
+
+        $user = User::where('nik', $pengajuan->nik)
+            ->where('email', $pengajuan->email)
+            ->first();
+
         $pengajuan->status = $status;
         $pengajuan->save();
+
+        $user->notify(new UpdateStatusPengajuanNotification($pengajuan->id, $status));
 
         return redirect()->back()->with('success', "Status pengajuan berhasil diubah menjadi {$status}.");
     }

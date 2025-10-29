@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <x-input-label for="nip_camat" :value="__('Nomor Admin')" />
+                        <x-input-label for="nip_camat" :value="__('NIP Camat')" />
                         <x-text-input id="nip_camat" name="nip_camat" type="text" class="block w-full mt-1"
                             value="{{ old('nip_camat', $utility->nip_camat) }}" />
                         <x-input-error :messages="$errors->get('nip_camat')" class="mt-2" />

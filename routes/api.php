@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FieldSuratController;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PengajuanSuratController;
 use Illuminate\Http\Request;
@@ -35,6 +36,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/pengajuanterbaru', [PengajuanSuratController::class, 'terbaru']);
 
     Route::post('/ubahpassword', [AuthController::class, 'ubahPassword']);
+
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::get('/notifications/unread', [NotificationController::class, 'unread']);
+    Route::patch('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
 });
 
 Route::get('/pengajuancetak{id}', [PdfController::class, 'cetak']);
@@ -46,6 +51,8 @@ Route::post('reset-password', [AuthController::class, 'reset']);
 Route::get('/getFieldSurat/{id}', [FieldSuratController::class, 'getFieldSurat']);
 
 Route::get('/getNomorAdmin', [GlobalController::class, 'index']);
+
+
 
 
 Route::post('/pengajuan', [PengajuanSuratController::class, 'store']);

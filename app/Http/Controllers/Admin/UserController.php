@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -45,52 +46,6 @@ class UserController extends Controller
         return view('admin.user.index-user', $data);
     }
 
-    public function unactive(Request $request)
-    {
-        $search = $request->input('search');
-        $users = User::where('role', 'User')
-            ->where('is_active', false) // Menambahkan kondisi is_active = true
-            ->when($search, function ($query, $search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('name', 'like', "%{$search}%")
-                        ->orWhere('email', 'like', "%{$search}%");
-                });
-            })
-            ->paginate(7)
-            ->withQueryString();
-
-        // $users = User::where('role', 'User')->paginate(7);
-
-        $data = [
-            'users' => $users
-        ];
-
-
-        return view('admin.user.index-user', $data);
-    }
-
-    public function indexAdmin(Request $request)
-    {
-
-        $search = $request->input('search');
-
-
-        // $users = User::where('role', 'Admin')->paginate(7);
-
-        $users = User::where('role', 'Admin')
-            ->when($search, function ($query, $search) {
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
-            })
-            ->paginate(7)
-            ->withQueryString();
-
-        $data = [
-            'users' => $users
-        ];
-
-        return view('admin.user.index-admin', $data);
-    }
 
     public function create()
     {
@@ -139,18 +94,54 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255'
+            'name'                  => 'required|string|max:255',
+            'email'                 => 'required|string|email|max:255',
+            'nik'                   => 'nullable|string|max:20',
+            'no_kk'                 => 'nullable|string|max:20',
+            'nama_kepala_keluarga'  => 'nullable|string|max:255',
+            'alamat'                => 'nullable|string|max:500',
+            'desa'                  => 'nullable|string|max:255',
+            'rt'                    => 'nullable|string|max:10',
+            'rw'                    => 'nullable|string|max:10',
+            'kecamatan'             => 'nullable|string|max:255',
+            'kabupaten'             => 'nullable|string|max:255',
+            'provinsi'              => 'nullable|string|max:255',
+            'kode_pos'              => 'nullable|string|max:10',
+            'dusun'                 => 'nullable|string|max:255',
+            'nomor_hp'              => 'nullable|string|max:20',
+            'pekerjaan'             => 'nullable|string|max:255',
+            'tempat_lahir'          => 'nullable|string|max:255',
+            'tgl_lahir'             => 'nullable|date',
+            'is_active'             => 'required|boolean',
+            'foto_ktp'              => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'foto_kk'               => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $user = User::findOrFail($id);
-        $data = $request->all();
+        $data = $request->except(['foto_ktp', 'foto_kk']);
+
+        // Upload foto KTP
+        if ($request->hasFile('foto_ktp')) {
+            if ($user->foto_ktp && Storage::exists('public/' . $user->foto_ktp)) {
+                Storage::delete('public/' . $user->foto_ktp);
+            }
+            $data['foto_ktp'] = $request->file('foto_ktp')->store('uploads/foto_ktp', 'public');
+        }
+
+        // Upload foto KK
+        if ($request->hasFile('foto_kk')) {
+            if ($user->foto_kk && Storage::exists('public/' . $user->foto_kk)) {
+                Storage::delete('public/' . $user->foto_kk);
+            }
+            $data['foto_kk'] = $request->file('foto_kk')->store('uploads/foto_kk', 'public');
+        }
 
         $user->update($data);
 
-        return redirect()->route('user.admin')->with('success', 'Data Berhasil Diupdate');
+        return redirect()
+            ->route('user.index')
+            ->with('success', 'Data pengguna berhasil diperbarui.');
     }
 
     public function destroy($id)
@@ -162,12 +153,6 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'User berhasi dihapus');
     }
 
-    public function editPassword($id)
-    {
-
-        $user = User::findOrFail($id);
-        return view('admin.user.edit-password', compact('user'));
-    }
 
     public function updatePassword(Request $request, $id)
     {
