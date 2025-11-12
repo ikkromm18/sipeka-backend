@@ -45,7 +45,7 @@
                                 <th scope="col" class="px-6 py-3">Email</th>
                                 <th scope="col" class="px-6 py-3">Alamat</th>
                                 <th scope="col" class="px-6 py-3">Jenis Surat</th>
-                                <th scope="col" class="px-6 py-3"> </th>
+                                <th scope="col" class="px-6 py-3"></th>
                                 <th scope="col" class="px-6 py-3">Status</th>
                                 <th scope="col" class="px-6 py-3 text-center">Aksi</th>
                             </tr>

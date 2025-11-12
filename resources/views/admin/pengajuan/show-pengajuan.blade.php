@@ -135,8 +135,10 @@
 
                         {{-- Jika status masih diajukan --}}
                         @if ($pengajuan->status === 'diajukan')
+                            {{-- Tombol Setujui langsung submit --}}
                             <form action="{{ route('pengajuansurat.updateStatus', [$pengajuan->id, 'diproses']) }}"
-                                method="POST" onsubmit="return confirm('Setujui dan ubah status menjadi Diproses?')">
+                                method="POST" onsubmit="return confirm('Setujui dan ubah status menjadi Diproses?')"
+                                class="inline">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit"
@@ -145,16 +147,13 @@
                                 </button>
                             </form>
 
-                            <form action="{{ route('pengajuansurat.updateStatus', [$pengajuan->id, 'ditolak']) }}"
-                                method="POST" onsubmit="return confirm('Yakin ingin menolak pengajuan ini?')">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit"
-                                    class="px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded hover:bg-red-700">
-                                    ❌ Tolak
-                                </button>
-                            </form>
+                            {{-- Tombol Tolak pakai modal --}}
+                            <button type="button" onclick="openRejectModal('{{ $pengajuan->id }}')"
+                                class="px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded hover:bg-red-700">
+                                ❌ Tolak
+                            </button>
                         @endif
+
 
                         {{-- Jika status sedang diproses --}}
                         @if ($pengajuan->status === 'diproses')
@@ -188,3 +187,46 @@
         </div>
     </div>
 </x-app-layout>
+
+<!-- Modal Tolak Pengajuan -->
+<div id="rejectModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
+    <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+        <h3 class="mb-4 text-lg font-semibold">Tolak Pengajuan Surat</h3>
+        <form id="rejectForm" method="POST">
+            @csrf
+            @method('PUT')
+
+            <div class="mb-4">
+                <label for="reject_keterangan" class="block text-sm font-medium text-gray-700">
+                    Keterangan Penolakan
+                </label>
+                <textarea id="reject_keterangan" name="keterangan" rows="3"
+                    class="w-full mt-1 border-gray-300 rounded-md shadow-sm" placeholder="Tuliskan alasan penolakan..."></textarea>
+            </div>
+
+            <div class="flex justify-end space-x-2">
+                <button type="button" onclick="closeRejectModal()"
+                    class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300">
+                    Batal
+                </button>
+                <button type="submit" class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">
+                    Tolak Pengajuan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function openRejectModal(id) {
+        const form = document.getElementById('rejectForm');
+        form.action = `/pengajuansurat/${id}/status/ditolak`; // sesuai route updateStatus
+        document.getElementById('rejectModal').classList.remove('hidden');
+    }
+
+    function closeRejectModal() {
+        document.getElementById('rejectModal').classList.add('hidden');
+        document.getElementById('reject_keterangan').value = '';
+    }
+</script>

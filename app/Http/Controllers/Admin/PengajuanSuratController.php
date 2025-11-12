@@ -21,7 +21,7 @@ class PengajuanSuratController extends Controller
      */
     public function index(Request $request)
     {
-        $query = \App\Models\PengajuanSurat::with('JenisSurats');
+        $query = PengajuanSurat::with('JenisSurats')->orderBy('created_at', 'desc');
 
         if ($search = $request->input('search')) {
             $query->where(function ($q) use ($search) {
@@ -67,7 +67,7 @@ class PengajuanSuratController extends Controller
         return redirect()->back()->with('success', 'Pengajuan surat berhasil dihapus.');
     }
 
-    public function updateStatus($id, $status)
+    public function updateStatus(Request $request, $id, $status)
     {
         $pengajuan = PengajuanSurat::findOrFail($id);
 
@@ -76,6 +76,7 @@ class PengajuanSuratController extends Controller
             ->first();
 
         $pengajuan->status = $status;
+        $pengajuan->keterangan = $request->keterangan;
         $pengajuan->save();
 
         $user->notify(new UpdateStatusPengajuanNotification($pengajuan->id, $status));

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -16,10 +17,36 @@ class PengajuanSuratSeeder extends Seeder
         // Buat Data 
         $data = [
             [
-                'name' => 'Wiji',
-                'email' => 'wiji749@gmail.com',
-                'alamat' => 'pemalang',
-                'jenis_surat_id' => 1
+                'nik' => '3507123412341234',
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+                'alamat' => 'Jl. Melati No. 10',
+                'jenis_surat_id' => 1,
+                'created_at' => Carbon::now(),
+            ],
+            [
+                'nik' => '3507123412341234',
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+                'alamat' => 'Jl. Melati No. 10',
+                'jenis_surat_id' => 2,
+                'created_at' => Carbon::now(),
+            ],
+            [
+                'nik' => '3507123412341234',
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+                'alamat' => 'Jl. Melati No. 10',
+                'jenis_surat_id' => 3,
+                'created_at' => Carbon::now(),
+            ],
+            [
+                'nik' => '3507123412341234',
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+                'alamat' => 'Jl. Melati No. 10',
+                'jenis_surat_id' => 4,
+                'created_at' => Carbon::now(),
             ]
         ];
 
