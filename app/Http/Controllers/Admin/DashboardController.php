@@ -18,6 +18,11 @@ class DashboardController extends Controller
         $totalPengajuan = PengajuanSurat::count();
         $totalUser = User::count();
 
+        $totalPengajuanPindahAntarKecamatan = PengajuanSurat::where('jenis_surat_id', 1)->count();
+        $totalPengajuanPindahAntarProvinsi = PengajuanSurat::where('jenis_surat_id', 2)->count();
+        $totalPengajuanDispenNikah = PengajuanSurat::where('jenis_surat_id', 3)->count();
+        $totalPengajuanIjinHajatan = PengajuanSurat::where('jenis_surat_id', 4)->count();
+
         $pengajuanTerbaru = PengajuanSurat::with('JenisSurats', 'user')
             ->latest()
             ->take(5)
@@ -52,6 +57,10 @@ class DashboardController extends Controller
             'totalJenisSurat',
             'totalFieldSurat',
             'totalPengajuan',
+            'totalPengajuanPindahAntarKecamatan',
+            'totalPengajuanPindahAntarProvinsi',
+            'totalPengajuanDispenNikah',
+            'totalPengajuanIjinHajatan',
             'totalUser',
             'pengajuanTerbaru',
             'labels',

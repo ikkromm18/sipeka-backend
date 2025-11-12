@@ -9,24 +9,27 @@
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <!-- Ringkasan -->
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+
                 <div class="p-6 bg-white border rounded-lg shadow-sm">
-                    <p class="text-sm text-gray-500">Total Jenis Surat</p>
-                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalJenisSurat }}</h3>
+                    <p class="text-sm text-gray-500">Pengajuan Ijin Hajatan</p>
+                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalPengajuanIjinHajatan }}</h3>
                 </div>
 
                 <div class="p-6 bg-white border rounded-lg shadow-sm">
-                    <p class="text-sm text-gray-500">Total Field Surat</p>
-                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalFieldSurat }}</h3>
+                    <p class="text-sm text-gray-500">Pengajuan Pindah Antar Kecamatan</p>
+                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalPengajuanPindahAntarKecamatan }}</h3>
                 </div>
 
                 <div class="p-6 bg-white border rounded-lg shadow-sm">
-                    <p class="text-sm text-gray-500">Total Pengajuan Surat</p>
-                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalPengajuan }}</h3>
+                    <p class="text-sm text-gray-500">Pengajuan Pindah Antar Provinsi</p>
+                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalPengajuanPindahAntarProvinsi }}</h3>
                 </div>
 
+
+
                 <div class="p-6 bg-white border rounded-lg shadow-sm">
-                    <p class="text-sm text-gray-500">Total Pengguna</p>
-                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalUser }}</h3>
+                    <p class="text-sm text-gray-500">Pengajuan Dispen Nikah</p>
+                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalPengajuanDispenNikah }}</h3>
                 </div>
             </div>
 

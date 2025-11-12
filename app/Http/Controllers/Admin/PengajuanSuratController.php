@@ -36,25 +36,7 @@ class PengajuanSuratController extends Controller
         return view('admin.pengajuan.index-pengajuan', compact('pengajuansurats'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $pengajuan = PengajuanSurat::with('JenisSurats', 'DataPengajuans.FieldSurats')
@@ -75,28 +57,14 @@ class PengajuanSuratController extends Controller
         return view('admin.pengajuan.show-pengajuan', $data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy($id)
     {
-        //
-    }
+        $pengajuan = PengajuanSurat::findOrFail($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $pengajuan->delete();
+
+        return redirect()->back()->with('success', 'Pengajuan surat berhasil dihapus.');
     }
 
     public function updateStatus($id, $status)

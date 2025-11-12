@@ -31,11 +31,7 @@
                         @endif
                     </form>
 
-                    <a href="{{ route('pengajuansurat.create') }}">
-                        <x-primary-button>
-                            + Tambah Pengajuan
-                        </x-primary-button>
-                    </a>
+
                 </div>
 
                 {{-- Tabel Data User --}}
@@ -49,6 +45,7 @@
                                 <th scope="col" class="px-6 py-3">Email</th>
                                 <th scope="col" class="px-6 py-3">Alamat</th>
                                 <th scope="col" class="px-6 py-3">Jenis Surat</th>
+                                <th scope="col" class="px-6 py-3"> </th>
                                 <th scope="col" class="px-6 py-3">Status</th>
                                 <th scope="col" class="px-6 py-3 text-center">Aksi</th>
                             </tr>
@@ -75,6 +72,9 @@
                                         {{ $pengajuan->JenisSurats->nama_jenis ?? '-' }}
                                     </td>
                                     <td class="px-6 py-4">
+
+                                    </td>
+                                    <td class="px-6 py-4">
                                         {{-- Status tampil warna berbeda --}}
                                         @php
                                             $status = strtolower($pengajuan->status ?? 'menunggu');
@@ -92,8 +92,6 @@
                                     <td class="px-6 py-4 space-x-2 text-center">
                                         <a href="{{ route('pengajuansurat.show', $pengajuan->id) }}"
                                             class="text-blue-600 hover:underline">Detail</a>
-                                        <a href="{{ route('pengajuansurat.edit', $pengajuan->id) }}"
-                                            class="text-yellow-600 hover:underline">Edit</a>
                                         <form action="{{ route('pengajuansurat.destroy', $pengajuan->id) }}"
                                             method="POST" class="inline">
                                             @csrf
@@ -125,3 +123,6 @@
         </div>
     </div>
 </x-app-layout>
+
+{{-- {{ \Carbon\Carbon::parse($pengajuan->created_at)->locale('id')->translatedFormat('d F Y') }} --}}
+{{-- {{ $pengajuan->created_at }} --}}

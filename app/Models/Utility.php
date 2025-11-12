@@ -10,6 +10,7 @@ class Utility extends Model
 
     protected $fillable = [
         'nama_camat',
+        'nip_camat',
         'nomor_admin'
     ];
 }
