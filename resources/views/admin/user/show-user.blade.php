@@ -96,21 +96,30 @@
                     </div>
 
                     {{-- Foto (jika ada) --}}
-                    @if ($user->foto_ktp || $user->foto_kk)
+                    @if ($user->foto_ktp || $user->foto_kk || $user->foto_profil)
                         <div class="mt-6">
                             <h3 class="mb-3 font-semibold text-gray-900 text-md">Dokumen</h3>
                             <div class="flex flex-wrap gap-6">
+
                                 @if ($user->foto_ktp)
                                     <div>
                                         <p class="mb-1 text-sm text-gray-700">Foto KTP:</p>
-                                        <img src="{{ asset('storage/' . $user->foto_ktp) }}" alt="Foto KTP"
+                                        <img src="{{ asset($user->foto_ktp) }}" alt="Foto KTP"
                                             class="w-56 rounded shadow">
                                     </div>
                                 @endif
                                 @if ($user->foto_kk)
                                     <div>
                                         <p class="mb-1 text-sm text-gray-700">Foto KK:</p>
-                                        <img src="{{ asset('storage/' . $user->foto_kk) }}" alt="Foto KK"
+                                        <img src="{{ asset($user->foto_kk) }}" alt="Foto KK"
+                                            class="w-56 rounded shadow">
+                                    </div>
+                                @endif
+
+                                @if ($user->foto_profil)
+                                    <div>
+                                        <p class="mb-1 text-sm text-gray-700">Foto Profile:</p>
+                                        <img src="{{ asset($user->foto_profil) }}" alt="Foto Profile"
                                             class="w-56 rounded shadow">
                                     </div>
                                 @endif

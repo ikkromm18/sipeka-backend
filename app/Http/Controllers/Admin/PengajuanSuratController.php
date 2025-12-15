@@ -97,7 +97,7 @@ class PengajuanSuratController extends Controller
         $utility = Utility::first();
 
         // 1️⃣ Path template Word
-        $templatePath = public_path('storage/' . $pengajuan->JenisSurats->template_surat);
+        $templatePath = public_path($pengajuan->JenisSurats->template_surat);
         if (!file_exists($templatePath)) {
             return back()->with('error', 'Template surat tidak ditemukan: ' . $templatePath);
         }

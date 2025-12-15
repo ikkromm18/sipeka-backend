@@ -41,6 +41,7 @@ class User extends Authenticatable
         'tgl_lahir',
         'foto_ktp',
         'foto_kk',
+        'foto_profil',
         'is_active'
     ];
 

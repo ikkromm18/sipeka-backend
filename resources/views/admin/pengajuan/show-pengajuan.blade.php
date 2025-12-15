@@ -109,7 +109,7 @@
                                             </td>
                                             <td class="px-4 py-3 border">
                                                 @if ($isFile && $item->nilai)
-                                                    <a href="{{ asset('storage/' . $item->nilai) }}" target="_blank"
+                                                    <a href="{{ asset($item->nilai) }}" target="_blank"
                                                         class="text-blue-600 underline">
                                                         📎 Lihat File
                                                     </a>

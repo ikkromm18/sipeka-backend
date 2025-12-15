@@ -47,7 +47,7 @@ class PengajuanSuratController extends Controller
     {
         DB::beginTransaction();
         try {
-            // 🔹 1. Simpan data ke tabel pengajuan_surats
+            // 1. Simpan data ke tabel pengajuan_surats
             $pengajuan = PengajuanSurat::create([
                 'nik' => $request->nik,
                 'name' => $request->name,
@@ -57,14 +57,22 @@ class PengajuanSuratController extends Controller
                 'status' => 'diajukan',
             ]);
 
-            // 🔹 2. Simpan ke tabel data_pengajuans
+            // 2. Simpan ke tabel data_pengajuans
             if ($request->has('fields')) {
                 foreach ($request->fields as $fieldId => $nilai) {
-                    // cek file
+
+                    // cek apakah field berupa file
                     if ($request->hasFile("fields.$fieldId")) {
                         $file = $request->file("fields.$fieldId");
-                        $path = $file->store('uploads/pengajuan', 'public');
-                        $nilai = $path;
+
+                        // nama file unik
+                        $filename = time() . '_' . $fieldId . '.' . $file->getClientOriginalExtension();
+
+                        // pindahkan ke public/upload/pengajuan
+                        $file->move(public_path('upload/pengajuan'), $filename);
+
+                        // path yang disimpan ke DB
+                        $nilai = 'upload/pengajuan/' . $filename;
                     }
 
                     DataPengajuan::create([
@@ -74,7 +82,6 @@ class PengajuanSuratController extends Controller
                     ]);
                 }
             }
-
 
             DB::commit();
 

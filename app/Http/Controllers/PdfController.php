@@ -23,7 +23,7 @@ class PdfController extends Controller
         $utility = Utility::first();
 
         // 1️⃣ Tentukan path template Word
-        $templatePath = public_path('storage/' . $pengajuan->JenisSurats->template_surat);
+        $templatePath = public_path($pengajuan->JenisSurats->template_surat);
         if (!file_exists($templatePath)) {
             return response()->json(['error' => 'Template tidak ditemukan'], 404);
         }

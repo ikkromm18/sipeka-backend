@@ -38,18 +38,36 @@ class AuthController extends Controller
             'tgl_lahir'             => 'nullable|date',
             'foto_ktp'              => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'foto_kk'               => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'foto_profil'           => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+
         ]);
 
         // ✅ Upload foto jika ada
         $fotoKtpPath = null;
         $fotoKkPath  = null;
+        $fotoProfilPath = null;
 
         if ($request->hasFile('foto_ktp')) {
-            $fotoKtpPath = $request->file('foto_ktp')->store('uploads/foto_ktp', 'public');
+            $file = $request->file('foto_ktp');
+            $filename = time() . '_ktp.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/foto_ktp'), $filename);
+            $fotoKtpPath = 'upload/foto_ktp/' . $filename;
         }
+
         if ($request->hasFile('foto_kk')) {
-            $fotoKkPath = $request->file('foto_kk')->store('uploads/foto_kk', 'public');
+            $file = $request->file('foto_kk');
+            $filename = time() . '_kk.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/foto_kk'), $filename);
+            $fotoKkPath = 'upload/foto_kk/' . $filename;
         }
+
+        if ($request->hasFile('foto_profil')) {
+            $file = $request->file('foto_profil');
+            $filename = time() . '_profil.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/foto_profil'), $filename);
+            $fotoProfilPath = 'upload/foto_profil/' . $filename;
+        }
+
 
         // ✅ Simpan user
         $user = User::create([
@@ -74,6 +92,8 @@ class AuthController extends Controller
             'tgl_lahir'             => $request->tgl_lahir,
             'foto_ktp'              => $fotoKtpPath,
             'foto_kk'               => $fotoKkPath,
+            'foto_profil'           => $fotoProfilPath,
+
         ]);
 
         $token = $user->createToken($user->name)->plainTextToken;
@@ -172,7 +192,7 @@ class AuthController extends Controller
     {
         $user = $request->user();
 
-        // validasi
+        // ✅ Validasi
         $validated = $request->validate([
             'name'                  => 'required|string|max:255',
             'email'                 => 'required|email|unique:users,email,' . $user->id,
@@ -192,34 +212,72 @@ class AuthController extends Controller
             'pekerjaan'             => 'nullable|string|max:255',
             'tempat_lahir'          => 'nullable|string|max:255',
             'tgl_lahir'             => 'nullable|date',
+            'foto_profil'           => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'foto_ktp'              => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'foto_kk'               => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // upload foto KTP
+        /*
+        |--------------------------------------------------------------------------
+        | Upload Foto Profil
+        |--------------------------------------------------------------------------
+        */
+        if ($request->hasFile('foto_profil')) {
+
+            // hapus foto lama
+            if ($user->foto_profil && file_exists(public_path($user->foto_profil))) {
+                unlink(public_path($user->foto_profil));
+            }
+
+            $file = $request->file('foto_profil');
+            $filename = time() . '_profil.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/foto_profil'), $filename);
+            $validated['foto_profil'] = 'upload/foto_profil/' . $filename;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Upload Foto KTP
+        |--------------------------------------------------------------------------
+        */
         if ($request->hasFile('foto_ktp')) {
-            if ($user->foto_ktp) {
-                Storage::disk('public')->delete($user->foto_ktp);
+
+            if ($user->foto_ktp && file_exists(public_path($user->foto_ktp))) {
+                unlink(public_path($user->foto_ktp));
             }
-            $validated['foto_ktp'] = $request->file('foto_ktp')->store('uploads/foto_ktp', 'public');
+
+            $file = $request->file('foto_ktp');
+            $filename = time() . '_ktp.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/foto_ktp'), $filename);
+            $validated['foto_ktp'] = 'upload/foto_ktp/' . $filename;
         }
 
-        // upload foto KK
+        /*
+        |--------------------------------------------------------------------------
+        | Upload Foto KK
+        |--------------------------------------------------------------------------
+        */
         if ($request->hasFile('foto_kk')) {
-            if ($user->foto_kk) {
-                Storage::disk('public')->delete($user->foto_kk);
+
+            if ($user->foto_kk && file_exists(public_path($user->foto_kk))) {
+                unlink(public_path($user->foto_kk));
             }
-            $validated['foto_kk'] = $request->file('foto_kk')->store('uploads/foto_kk', 'public');
+
+            $file = $request->file('foto_kk');
+            $filename = time() . '_kk.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/foto_kk'), $filename);
+            $validated['foto_kk'] = 'upload/foto_kk/' . $filename;
         }
 
-        // update user
+        // ✅ Update user
         $user->update($validated);
 
         return response()->json([
             'message' => 'Profil berhasil diperbarui ✅',
-            'user'    => $user
+            'user'    => $user->fresh()
         ]);
     }
+
 
     public function ubahPassword(Request $request)
     {
