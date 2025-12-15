@@ -93,25 +93,25 @@ class PdfController extends Controller
         }
 
         // 4️⃣ Isi data dari pengajuan
+        // Isi data pengajuan
         foreach ($pengajuan->DataPengajuans as $dp) {
             $fieldName = strtolower(str_replace(' ', '_', $dp->FieldSurats->nama_field));
             $templateProcessor->setValue($fieldName, $dp->nilai ?? '-');
         }
 
-
-        // 5️⃣ Simpan hasil ke file Word baru di public path
+        // 5️⃣ Simpan hasil ke folder public/generated
         $fileName = 'surat_pengajuan_' . $pengajuan->id . '.docx';
-        $outputPath = public_path('storage/generated/' . $fileName);
+        $outputDir = public_path('generated');
 
-        // Pastikan folder generated ada
-        if (!file_exists(public_path('storage/generated'))) {
-            mkdir(public_path('storage/generated'), 0777, true);
+        if (!file_exists($outputDir)) {
+            mkdir($outputDir, 0777, true);
         }
 
+        $outputPath = $outputDir . '/' . $fileName;
         $templateProcessor->saveAs($outputPath);
 
-        // 6️⃣ (Opsional) Kembalikan URL publik
-        $fileUrl = asset('storage/generated/' . $fileName);
+        // 6️⃣ Kembalikan URL publik
+        $fileUrl = asset('generated/' . $fileName);
 
         return response()->json([
             'success' => true,
